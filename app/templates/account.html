@@ -1,13 +1,6 @@
-<!doctype html>
-
-<html>
-  
-  <head>
-    <title>Open Exchange</title>
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+{% extends "baselayout.html" %}
+{% block styles %}
+{{super()}}
     <style type="text/css">
       /* Space out content a bit */
       body {
@@ -78,9 +71,9 @@
         }
       }
     </style>
-  </head>
-  
-  <body>
+{% endblock %}
+  {% block content %}
+
   <!--  mszGiGkfgB1UqPNpTKvUJ1x3SLaG5YX5m  -->
     <div class="container">
       <div class="header">
@@ -115,18 +108,15 @@
           <b>Deposit Address:</b> {{ deposit }}
         </div>
         {% endif %}
-        {% if danger %}
-              <div class="alert alert-danger alert-info">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <b>Error!</b> {{ danger }}
-        </div>
-        {% endif %}
-    {% if success %}
-      <div class="alert alert-success alert-info">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <b>Success!</b> {{ success }}
-    </div>
-    {% endif %}
+        {% with messages = get_flashed_messages(with_categories=true) %} 
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{category}} alert-info">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <b>Error!</b> {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %} {% endwith %}
         
       </div>
       <ul class="list-group">
@@ -136,13 +126,13 @@
             <a class="btn btn-default" data-toggle="dropdown" href="#">Deposit/Withdraw</a><a class="btn dropdown-toggle btn-primary" data-toggle="dropdown" href="#">    <span class="caret"></span>  </a>
             <ul class="dropdown-menu">
               <li>
-                <a href="/deposit/{{ currency }}">Deposit</a>
+                <a href="/account/deposit/{{ currency }}">Deposit</a>
               </li>
               <li>
-                <a href="/withdraw/{{ currency }}">Withdraw</a>
+                <a href="/account/withdraw/{{ currency }}">Withdraw</a>
               </li>
               <li>
-                <a href="/history/{{ currency }}">History</a>
+                <a href="/account/history/{{ currency }}">History</a>
               </li>
             </ul>
           </div>
@@ -206,7 +196,7 @@
                 <td>{{ order[1] }}</td>
                 <td>{{ order[2] }}</td>
                 <td>{{ order[3] }}</td>
-                <td><a href="/cancelorder/{{ order[4] }}">X</a></td>
+                <td><a href="/order/cancel/{{ order[4] }}">X</a></td>
             </tr>
             {% endfor %}
             </tbody>
@@ -224,6 +214,4 @@
       </div>
     </div>
     <!-- /container -->
-  </body>
-
-</html>
+{% endblock %}

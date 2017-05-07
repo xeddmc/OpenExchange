@@ -1,11 +1,6 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Register</title>
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+{% extends "baselayout.html" %}
+{% block styles %}
+{{super()}}
     <style type="text/css">
       body {
         padding-top: 40px;
@@ -48,18 +43,22 @@
         border-top-right-radius: 0;
       }
     </style>
-  </head>
-  <body>
+{% endblock %}
+
+  {% block content %}
     <div class="container">
 
       <form class="form" name="loginform" method="POST" action="register">
         <h2 class="form-signin-heading">Register</h2>
-        {% if error %}
-          <div class="alert alert-danger alert-info">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <b>Error!</b>  {{ error }}
-        </div>
-        {% endif %}
+        {% with messages = get_flashed_messages(with_categories=true) %} 
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{category}} alert-info">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <b>Error!</b> {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %} {% endwith %}
         <input type="text" class="form-control" placeholder="Name" name="username">
         <input type="text" class="form-control" placeholder="Email address" name="email">
         <input type="password" class="form-control" placeholder="Password" name="password">
@@ -68,6 +67,4 @@
       </form>
 
     </div> <!-- /container -->
-
-  </body>
-</html>
+{% endblock %}

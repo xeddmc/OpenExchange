@@ -1,4 +1,5 @@
 .DS_Store
+.idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -8,6 +9,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.vagrant
 env/
 build/
 develop-eggs/
@@ -55,7 +57,7 @@ docs/_build/
 target/
 
 #misc bitcoin stuff
-bitcoinrpc/*
+#bitcoinrpc/*
 jsonrpc/*
 *.db
 *.txt
